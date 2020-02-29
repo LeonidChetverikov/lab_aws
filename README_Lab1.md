@@ -29,10 +29,15 @@ You can run AWS CLI commands in here just like you would on your local computer.
 user:~/environment $ aws sts get-caller-identity
 You'll see output indicating your account and user information:
 
+
 {
+
     "Account": "123456789012",
+
     "UserId": "AKIAI44QH8DHBEXAMPLE",
+
     "Arn": "arn:aws:iam::123456789012:user/user"
+
 }
 
 Stage 1: Create an AWS CodeCommit Repository
@@ -61,7 +66,7 @@ From CodeCommit Console, you can get the https clone url link for your repo.
 Go to Cloud9 IDE terminal prompt
 Run git clone to pull down a copy of the repository into the local repo:
 
-user:~/environment $ git clone https://git-codecommit.<YOUR-REGION>.amazonaws.com/v1/repos/WebAppRepo
+user:~/environment $ git clone https://git-codecommit.  <YOUR-REGION>  .amazonaws.com/v1/repos/WebAppRepo
 
 Provide your Git HTTPs credential when prompted. You would be seeing the following message if cloning is successful. warning: You appear to have cloned an empty repository.
 
