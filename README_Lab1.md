@@ -65,8 +65,9 @@ In this step, you will connect to the source repository created in the previous 
 From CodeCommit Console, you can get the https clone url link for your repo.
 Go to Cloud9 IDE terminal prompt
 Run git clone to pull down a copy of the repository into the local repo:
-
+```sh
 user:~/environment $ git clone https://git-codecommit.  <<YOUR-REGION>>  .amazonaws.com/v1/repos/WebAppRepo
+```
 
 Provide your Git HTTPs credential when prompted. You would be seeing the following message if cloning is successful. warning: You appear to have cloned an empty repository.
 
@@ -124,7 +125,7 @@ user:~/environment/WebAppRepo (master) $ echo YOUR-S3-OUTPUT-BUCKET-NAME: $(aws 
 Let us create CodeBuild project from CLI. 
 To create the build project using AWS CLI, we need JSON-formatted input. Create a json file named 'create-project.json' under 'MyDevEnvironment'.  Copy the content below to create-project.json. 
 (Replace the placeholders marked with <<>> with values for BuildRole ARN, S3 Output Bucket and region from the previous step.)
-
+```js
 {
 
   "name": "devops-webapp-project",
@@ -162,6 +163,7 @@ To create the build project using AWS CLI, we need JSON-formatted input. Create 
   "serviceRole": "<<REPLACE-YOUR-BuildRole-ARN>>"
 
 }
+```
 
 Switch to the directory that contains the file you just saved, and run the create-project command:
 
