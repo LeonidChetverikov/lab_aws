@@ -175,6 +175,7 @@ Create a file namely, buildspec.yml under WebAppRepo folder. Copy the content be
 
 version: 0.1
 
+```yaml
 phases:
   install:
     commands:
@@ -193,6 +194,7 @@ artifacts:
   files:
     - target/javawebdemo.war
   discard-paths: no
+  ```
 
 Commit & push the build specification file to repository
 
