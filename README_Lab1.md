@@ -66,7 +66,7 @@ From CodeCommit Console, you can get the https clone url link for your repo.
 Go to Cloud9 IDE terminal prompt
 Run git clone to pull down a copy of the repository into the local repo:
 
-user:~/environment $ git clone https://git-codecommit.  <YOUR-REGION>  .amazonaws.com/v1/repos/WebAppRepo
+user:~/environment $ git clone https://git-codecommit.  <<YOUR-REGION>>  .amazonaws.com/v1/repos/WebAppRepo
 
 Provide your Git HTTPs credential when prompted. You would be seeing the following message if cloning is successful. warning: You appear to have cloned an empty repository.
 
@@ -114,36 +114,65 @@ Please add descrip[tion of service roles created. Add the output of the stack.
 
 
 How to ddo task:
+
 user:~/environment/WebAppRepo (master) $ sudo yum -y install jq
+
 user:~/environment/WebAppRepo (master) $ echo YOUR-BuildRole-ARN: $(aws cloudformation describe-stacks --stack-name DevopsWorkshop-roles | jq -r '.Stacks[0].Outputs[]|select(.OutputKey=="CodeBuildRoleArn")|.OutputValue')
+
 user:~/environment/WebAppRepo (master) $ echo YOUR-S3-OUTPUT-BUCKET-NAME: $(aws cloudformation describe-stacks --stack-name DevopsWorkshop-roles | jq -r '.Stacks[0].Outputs[]|select(.OutputKey=="S3BucketName")|.OutputValue')
-Let us create CodeBuild project from CLI. To create the build project using AWS CLI, we need JSON-formatted input. Create a json file named 'create-project.json' under 'MyDevEnvironment'.  Copy the content below to create-project.json. (Replace the placeholders marked with <<>> with values for BuildRole ARN, S3 Output Bucket and region from the previous step.)
+
+Let us create CodeBuild project from CLI. 
+To create the build project using AWS CLI, we need JSON-formatted input. Create a json file named 'create-project.json' under 'MyDevEnvironment'.  Copy the content below to create-project.json. 
+(Replace the placeholders marked with <<>> with values for BuildRole ARN, S3 Output Bucket and region from the previous step.)
+
 {
+
   "name": "devops-webapp-project",
+
   "source": {
+
     "type": "CODECOMMIT",
+
     "location": "https://git-codecommit.<<REPLACE-YOUR-REGION-ID>>.amazonaws.com/v1/repos/WebAppRepo"
+
   },
+
   "artifacts": {
+
     "type": "S3",
+
     "location": "<<REPLACE-YOUR-S3-OUTPUT-BUCKET-NAME>>",
+
     "packaging": "ZIP",
+
     "name": "WebAppOutputArtifact.zip"
+
   },
+
   "environment": {
+
     "type": "LINUX_CONTAINER",
+
     "image": "aws/codebuild/java:openjdk-8",
+
     "computeType": "BUILD_GENERAL1_SMALL"
+
   },
+
   "serviceRole": "<<REPLACE-YOUR-BuildRole-ARN>>"
+
 }
 
 Switch to the directory that contains the file you just saved, and run the create-project command:
+
 user:~/environment $ aws codebuild create-project --cli-input-json file://create-project.json
 
 
 Stage 5: Let's build the code on cloud
-A build spec is a collection of build commands and related settings in YAML format, that AWS CodeBuild uses to run a build. Create a file namely, buildspec.yml under WebAppRepo folder. Copy the content below to the file and save it.
+
+A build spec is a collection of build commands and related settings in YAML format, that AWS CodeBuild uses to run a build. 
+Create a file namely, buildspec.yml under WebAppRepo folder. Copy the content below to the file and save it.
+
 version: 0.1
 
 phases:
@@ -168,7 +197,9 @@ artifacts:
 Commit & push the build specification file to repository
 
 Run the start-build command:
+
 user:~/environment/WebAppRepo (master) $ aws codebuild start-build --project-name devops-webapp-project
+
 PLease add test command into JSON and provide JSON to proctor review.
 
 
